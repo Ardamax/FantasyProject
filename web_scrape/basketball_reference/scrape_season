@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#getting rid of all the useless headers and junk
+delim='data-stat="ranker" csk="'
+curl -s 'https://www.basketball-reference.com/play-index/pgl_finder.cgi?request=1&match=game&year_min=2017&year_max=2017&is_playoffs=N&age_min=0&age_max=99&season_start=1&season_end=-1&pos_is_g=Y&order_by=pts' > temp
+l_num=`grep -n '         <th aria-label="Game Score" data-stat="game_score" scope="col" class=" poptip right" data-tip="Game Score" >GmSc</th>' temp | cut -f 1 -d :`
+sed -i "1,${l_num}d" temp
+echo "" > season_output.txt
+
+while IFS= read -r line
+do
+	echo "$line" | grep "${delim}" >> season_output.txt
+done < "temp"
+
+rm "temp"
+sed -i "1d" season_output.txt

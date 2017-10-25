@@ -1,0 +1,12 @@
+#!/bin/bash
+
+sed -i "s/><//g" season_output.txt
+sed -i "s/<tr//g" season_output.txt
+
+num_categories=33
+i=0
+while [ $i != $num_categories ]
+do
+	sed -i 
+	let i++
+done

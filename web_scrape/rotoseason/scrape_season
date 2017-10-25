@@ -1,0 +1,4 @@
+#!/bin/bash
+
+curl -s 'http://rotoguru1.com/hoop/playerhist/14-15/summary.txt' > season_output.csv
+sed -i "s/, /,/g;s/::/,/g;s/:/,/g;s/ /,/g" season_output.csv

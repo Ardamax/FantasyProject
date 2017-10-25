@@ -1,0 +1,55 @@
+#!/bin/bash
+
+curl -s 'https://www.fantasycruncher.com/lineup-rewind/fanduel/NBA/2015-11-20' > temp
+l_num=`grep -n "var playerlist = " temp | cut -f 1 -d :`
+let l_num--
+sed -i "1,${l_num}d" temp
+sed -i "2,\$d" temp
+sed -i "s/\"PlayerId/\n\"PlayerId/g" temp
+sed -i "1d" temp
+sed -i "s/[\{\}]//g" temp
+sed -i "s/mins//g" temp
+
+#killing all things that are not datatype: data
+sed -i "s/,[ \.\?\'\(\)a-zA-Z0-9-]\+,/,/g" temp
+
+sed -i "s/\"rotoworld_URL\":[-\/0-9a-zA-Z\"]\+,//g" temp
+sed -i "s/\"League\":[a-zA-Z\"]*,//;" temp
+sed -i "s/\"site_id\":[0-9\"]*,//" temp
+sed -i "s/\"truePos\":[A-Z\"]*,//" temp
+sed -i "s/\"ppm\":[\.0-9\"]*,//" temp
+sed -i "s/\"Injury_desc\":[ \.\?\'\(\)a-zA-Z0-9\"-]*,//" temp
+sed -i "s/\"StatusDetails\":[ \.\?\'\(\)a-zA-Z0-9\"-]*,//" temp
+sed -i "s/\"Status\":[- 0-9a-zA-Z\.\"\!]*,//" temp
+sed -i "s/\"User_Proj_Score\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"exposure\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"Actual_Mins\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"Avg_Pts\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"stddev\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"avg_usg\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"avg_\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"gameCount\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"avg_ppm\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"custom_proj\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"Price_Per_Point\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"Proj_Ceiling\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"Proj_Floor\":[- 0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"consistency\":[- \;0-9a-zA-Z.\"]*,//" temp
+sed -i "s/\"trueValue\":[- 0-9a-zA-Z.\"]*,//" temp
+
+#filtering out quotes
+sed -i "s/\"//g" temp
+
+header=`sed "1q;d" temp | grep -o "[a-zA-Z_]\+:" | sed "s/:/,/g" | tr -d '\n' | sed "s/,$//"`
+
+
+#killing all things that are not datatype: data
+sed -i "s/,[ \.\?\'\(\)a-zA-Z0-9-]\+,/,/g" temp
+sed -i "s/,[0-9]\+:[0-9\.]*//g" temp
+#filter tags out
+sed -i "s/[a-zA-Z_]*://g" temp
+
+echo $header > season_output.csv
+cat temp >> season_output.csv 
+
+rm temp

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+curl -s 'http://rotoguru1.com/cgi-bin/hyday.pl?mon=4&day=15&year=2015&game=fd&scsv=1' > season_output.txt
+l_num=`grep -n "<PRE><PRE>Date;GID;Pos;Name;Starter;FD Pts;FD Salary;Team;H/A;Oppt;Team Score;Oppt Score;Minutes;Stat line" season_output.txt | cut -f 1 -d :`
+sed -i "1,${l_num}d" season_output.txt
+l_num=`grep -n "^</pre>$" season_output.txt | cut -f 1 -d :`
+sed -i "${l_num},\$d" season_output.txt
