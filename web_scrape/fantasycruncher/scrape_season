@@ -12,9 +12,10 @@ sed -i "s/mins//g" temp
 
 #killing all things that are not datatype: data
 sed -i "s/,[ \.\?\'\(\)a-zA-Z0-9-]\+,/,/g" temp
+sed -i "s/;.\$/,/g" temp
 
 sed -i "s/\"rotoworld_URL\":[-\/0-9a-zA-Z\"]\+,//g" temp
-sed -i "s/\"League\":[a-zA-Z\"]*,//;" temp
+sed -i "s/\"League\":[a-zA-Z\"]*,//" temp
 sed -i "s/\"site_id\":[0-9\"]*,//" temp
 sed -i "s/\"truePos\":[A-Z\"]*,//" temp
 sed -i "s/\"ppm\":[\.0-9\"]*,//" temp
@@ -23,7 +24,7 @@ sed -i "s/\"StatusDetails\":[ \.\?\'\(\)a-zA-Z0-9\"-]*,//" temp
 sed -i "s/\"Status\":[- 0-9a-zA-Z\.\"\!]*,//" temp
 sed -i "s/\"User_Proj_Score\":[- 0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"exposure\":[- 0-9a-zA-Z.\"]*,//" temp
-sed -i "s/\"Actual_Mins\":[- 0-9a-zA-Z.\"]*,//" temp
+#sed -i "s/\"Actual_Mins\":[- 0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"Avg_Pts\":[- 0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"stddev\":[- 0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"avg_usg\":[- 0-9a-zA-Z.\"]*,//" temp
@@ -37,6 +38,8 @@ sed -i "s/\"Proj_Floor\":[- 0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"consistency\":[- \;0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"trueValue\":[- 0-9a-zA-Z.\"]*,//" temp
 
+
+sed -i "s/,\$//" temp
 #filtering out quotes
 sed -i "s/\"//g" temp
 
