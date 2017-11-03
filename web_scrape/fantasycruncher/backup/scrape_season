@@ -1,0 +1,15 @@
+#!/bin/bash
+
+tempflag=1
+
+echo "" > season_stats.csv
+for ((year=2014;i<2017;i+=1))
+do 
+	for ((month=1;month<=12;month+=1))
+	do
+		for ((day=1;day<=31;day+=1))
+		do
+			./scrape_day
+		done
+	done
+done
