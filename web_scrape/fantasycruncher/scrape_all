@@ -1,16 +1,19 @@
 #!/bin/bash
 
-headerflag=1
-
-echo "" > season_stats.csv
+echo "" > full_output.csv
 for ((year=2014;year<=2017;year+=1))
 do 
 	for ((month=1;month<=12;month+=1))
 	do
 		for ((day=1;day<=31;day+=1))
 		do
-			./scrape_day $headerflag $year $month $day
-			headerflag=0
+			./scrape_day $year $month $day
 		done
 	done
 done
+
+header=`sed "2q;d" temp | grep -o "[a-zA-Z_]\+:" | sed "s/:/,/g" | tr -d '\n' | sed "s/,$//"`
+sed -i "1s/^*$/${header}/" full_output.csv
+#filter tags out
+sed -i "s/[a-zA-Z_]*://g" full_output.csv
+

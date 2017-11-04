@@ -1,9 +1,8 @@
 #!/bin/bash
 
-headerflag=$1
-year=$2
-month=$3
-day=$4
+year=$1
+month=$2
+day=$3
 
 echo "scraping $month/$day/$year"
 
@@ -21,14 +20,15 @@ sed -i "s/mins//g" temp
 sed -i "s/,[ \.\?\'\(\)a-zA-Z0-9-]\+,/,/g" temp
 sed -i "s/;.\$/,/g" temp
 
-sed -i "s/\"rotoworld_URL\":[-\/0-9a-zA-Z\"]\+,//g" temp
+sed -i "s/\"rotoworld_URL\":[-\/%0-9a-zA-Z\"]\+,//g" temp
 sed -i "s/\"League\":[a-zA-Z\"]*,//" temp
 sed -i "s/\"site_id\":[0-9a-zA-Z\"]*,//" temp
 sed -i "s/\"truePos\":[A-Z\"]*,//" temp
 sed -i "s/\"ppm\":[\.0-9a-zA-Z\"]*,//" temp
-sed -i "s/\"Injury_desc\":[ \.\?\'\(\)a-zA-Z0-9\"-]*,//" temp
-sed -i "s/\"StatusDetails\":[ \.\?\'\(\)a-zA-Z0-9\"-]*,//" temp
+sed -i "s/\"Injury_desc\":[ \:\.\?\'\(\)a-zA-Z0-9\"-]*,//" temp
+sed -i "s/\"StatusDetails\":[ \:\/\.\?\'\(\)a-zA-Z0-9\"-]*,//" temp
 sed -i "s/\"Status\":[- 0-9a-zA-Z\.\"\!]*,//" temp
+sed -i "s/\"Default_Proj_Score\":[- 0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"User_Proj_Score\":[- 0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"exposure\":[- 0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"Proj_Mins\":[- 0-9a-zA-Z.\"]*,//" temp
@@ -51,18 +51,10 @@ sed -i "s/,\$//" temp
 #filtering out quotes
 sed -i "s/\"//g" temp
 
-header=`sed "1q;d" temp | grep -o "[a-zA-Z_]\+:" | sed "s/:/,/g" | tr -d '\n' | sed "s/,$//"`
-
-
 #killing all things that are not datatype: data
 sed -i "s/,[ \.\?\'\(\)a-zA-Z0-9-]\+,/,/g" temp
 sed -i "s/,[0-9]\+:[0-9\.]*//g" temp
-#filter tags out
-#sed -i "s/[a-zA-Z_]*://g" temp
 
-if [ $headerflag -eq 1 ];then
-	echo $header > full_output.csv
-fi
 cat temp >> full_output.csv 
 
 rm temp
