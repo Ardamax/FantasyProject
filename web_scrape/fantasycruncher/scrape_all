@@ -16,4 +16,5 @@ header=`sed "2q;d" temp | grep -o "[a-zA-Z_]\+:" | sed "s/:/,/g" | tr -d '\n' | 
 sed -i "1s/^*$/${header}/" full_output.csv
 #filter tags out
 sed -i "s/[a-zA-Z_]*://g" full_output.csv
-
+#getting rid of nulls
+sed -i "s/null//g" full_output.csv

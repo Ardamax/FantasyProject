@@ -31,7 +31,7 @@ sed -i "s/\"Status\":[- 0-9a-zA-Z\.\"\!]*,//" temp
 sed -i "s/\"Default_Proj_Score\":[- 0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"User_Proj_Score\":[- 0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"exposure\":[- 0-9a-zA-Z.\"]*,//" temp
-sed -i "s/\"Proj_Mins\":[- 0-9a-zA-Z.\"]*,//" temp
+#sed -i "s/\"Proj_Mins\":[- 0-9a-zA-Z.\"]*,//" temp
 #sed -i "s/\"Actual_Mins\":[- 0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"Avg_Pts\":[- 0-9a-zA-Z.\"]*,//" temp
 sed -i "s/\"stddev\":[- 0-9a-zA-Z.\"]*,//" temp
